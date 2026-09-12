@@ -1,16 +1,20 @@
 # Topic : Integral AI
-1.	Project Overview
+1.     Software Design
+
+IntegralAI is an AI-based integration learning platform designed to help students solve integration problems and understand the solving process. The software uses a layered architecture that separates the user interface, backend services, integration solver, data storage, and deployment. The frontend is designed using React/Next.js, while the backend uses Node.js and Express.js to handle API requests and different modules such as authentication, solving, history, progress, practice, and administration. The integration solver processes the problem, selects the suitable method and formula, generates the solution, and uses SymPy for verification. An AI/LLM service is also used to support explanations. The system follows abstraction, modularity, cohesion, and low coupling so that each part has a clear responsibility and can be changed easily without affecting the entire system. The user interface is kept simple and student-friendly, with a clear problem input area and step-by-step solution display. Docker is used to provide a consistent deployment environment.
+
+2.	Project Overview
 
 IntegralAI is an AI-powered educational web application designed to help students learn and solve calculus integration problems effectively. Users can either type an integration problem or upload an image of a handwritten or printed question. The system analyzes the problem using Artificial Intelligence, identifies the most appropriate integration technique, and generates a detailed step-by-step solution with explanations. It also stores solved problems and learning progress, allowing users to review previous work, practice similar questions, and improve their understanding of integration concepts. The platform also includes an administrator dashboard for managing users, question banks, and monitoring system performance.
 
 
 
-2.	Problem it Solves
+3.	Problem it Solves
 
 Many students find integration one of the most challenging topics in calculus because they struggle to identify the correct solving technique and understand the reasoning behind each step. Existing online calculators often provide only the final answer or limited working, making it difficult for students to learn the underlying concepts. There is also limited support for tracking learning progress and practicing similar problems. IntegralAI addresses these issues by providing AI-generated step-by-step explanations, personalized learning support, and progress tracking in a single platform.
 
 
-3. Target Users 
+4. Target Users 
 
 Primary Users:
 
@@ -25,11 +29,11 @@ Mathematics teachers who want a teaching aid.
 Tutors and coaching institutes.
 Educational organizations seeking AI-assisted learning tools.
 
-4.	Vision Statement:
+5.	Vision Statement:
 
 To create an intelligent and interactive learning platform that enables students to understand integration concepts through AI-powered step-by-step solutions, personalized practice, and progress tracking, making mathematics learning more accessible, engaging, and effective.
 
-5.	Key Features / Goals :
+6.	Key Features / Goals :
 
 Core Features
 
