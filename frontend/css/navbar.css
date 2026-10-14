@@ -1,0 +1,132 @@
+/* ==========================================================================
+   IntegralAI — Reusable Shared Navbar Styles
+   Isolated styles for the universal navigation bar component across all pages.
+   ========================================================================== */
+
+:root {
+  --nav-brand-primary: #4f46e5;
+  --nav-brand-hover: #4338ca;
+  --nav-brand-bg-light: #eef2ff;
+  --nav-text-main: #0f172a;
+  --nav-text-muted: #475569;
+  --nav-border-color: rgba(226, 232, 240, 0.8);
+}
+
+/* Base Navbar Container */
+.shared-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--nav-border-color);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Math Glyph Typography */
+.nav-math-font {
+  font-family: 'STIX Two Math', 'KaTeX_Main', 'EB Garamond', Georgia, serif;
+  font-feature-settings: 'calt' 1, 'kern' 1;
+}
+
+/* Navigation Links */
+.nav-tab-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  user-select: none;
+}
+
+.nav-tab-link:hover {
+  color: #0f172a;
+  background-color: rgba(241, 245, 249, 0.8);
+}
+
+/* Active State for Desktop Links */
+.nav-tab-link.active {
+  color: #4f46e5 !important;
+  background-color: #eef2ff !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 2px 0 rgba(79, 70, 229, 0.05);
+}
+
+/* Indicator line under active item */
+.nav-tab-link .nav-indicator {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0.875rem;
+  right: 0.875rem;
+  height: 2px;
+  background-color: #4f46e5;
+  border-radius: 9999px;
+}
+
+.nav-tab-link.active .nav-indicator {
+  display: block;
+}
+
+/* Mobile Links */
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #475569;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+}
+
+.mobile-nav-link:hover {
+  color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+.mobile-nav-link.active {
+  color: #4f46e5 !important;
+  background-color: #eef2ff !important;
+  font-weight: 600 !important;
+}
+
+/* Profile Dropdown Animations */
+@keyframes navDropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.nav-dropdown-animate {
+  animation: navDropdownFade 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Pulse animation for kernel active dot */
+@keyframes navPulseGlow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.15);
+  }
+}
+
+.nav-pulse-dot {
+  animation: navPulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IntegralAI - Create Academic Account</title>
+  <meta name="description" content="IntegralAI Studio - Autonomous Learning Environment. Create Computational Account for step-by-step symbolic derivation.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-createaccount">
+
+  <!-- Ambient Glow Effect -->
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <!-- Mathematical Formula Background Watermark Layer -->
+  <div class="math-watermark-layer" aria-hidden="true">
+    <div class="math-watermark-col math-watermark-left">
+      <div class="math-formula">\int u \, dv = uv - \int v \, du</div>
+      <div class="math-formula">\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}</div>
+      <div class="math-formula">\sum_{k=0}^{\infty} \frac{(-1)^k}{2k+1} = \frac{\pi}{4}</div>
+    </div>
+    <div class="math-watermark-col math-watermark-right">
+      <div class="math-formula">\mathcal{L}\{f'\}(s) = sF(s) - f(0)</div>
+      <div class="math-formula">\oint_{\partial S} \mathbf{F} \cdot d\mathbf{r} = \iint_S (\nabla \times \mathbf{F}) \cdot d\mathbf{S}</div>
+      <div class="math-formula">e^{i\pi} + 1 = 0</div>
+    </div>
+  </div>
+
+  <!-- Top Header -->
+  <header class="app-header">
+    <div class="brand-container">
+      <div class="brand-logo" aria-label="IntegralAI Logo">
+        <span class="integral-symbol">∫</span>
+      </div>
+      <div class="brand-text">
+        <div class="brand-title-row">
+          <span class="brand-name">IntegralAI</span>
+          <span class="brand-badge">STUDIO</span>
+        </div>
+        <p class="brand-tagline">Higher-Level Analytical Engine</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Central Authentication Stage -->
+  <main class="auth-wrapper">
+    <div class="auth-container">
+      
+      <!-- Autonomous Learning Pill Badge -->
+      <div class="badge-pill">
+        <span class="material-symbols-outlined sparkle-icon">auto_awesome</span>
+        <span>AUTONOMOUS LEARNING ENVIRONMENT</span>
+      </div>
+
+      <!-- Centered Header Section -->
+      <div class="auth-header-text">
+        <h1 id="portal-title">Create Computational Account</h1>
+        <p id="portal-subtitle">Gain immediate verified access to step-by-step symbolicderivation.</p>
+      </div>
+
+      <!-- Main Authentication Card -->
+      <div class="auth-card">
+        
+        <!-- Segmented Tab Switcher (Create Account Active) -->
+        <div class="auth-tabs" role="tablist" aria-label="Authentication Options">
+          <button type="button" 
+                  class="tab-btn" 
+                  id="tab-signin" 
+                  role="tab" 
+                  aria-selected="false" 
+                  aria-controls="form-signin">
+            <span class="material-symbols-outlined tab-icon">login</span>
+            <span>Sign In</span>
+          </button>
+          
+          <button type="button" 
+                  class="tab-btn active" 
+                  id="tab-signup" 
+                  role="tab" 
+                  aria-selected="true" 
+                  aria-controls="form-signup">
+            <span class="material-symbols-outlined tab-icon">person_add</span>
+            <span>Create Account</span>
+          </button>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- CREATE ACCOUNT FORM                            -->
+        <!-- ============================================== -->
+        <form id="form-signup" class="auth-form active" novalidate>
+          
+          <!-- Full Name Field -->
+          <div class="form-group">
+            <label for="signup-name" class="form-label">Full Name</label>
+            <div class="input-wrapper">
+              <span class="input-icon-left" aria-hidden="true">
+                <span class="material-symbols-outlined">badge</span>
+              </span>
+              <input type="text" 
+                     id="signup-name" 
+                     name="name" 
+                     class="form-input" 
+                     placeholder="Elena Vance" 
+                     autocomplete="name"
+                     required>
+            </div>
+            <span class="field-error" id="signup-name-error"></span>
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-group">
+            <label for="signup-email" class="form-label">Email (.edu / .ac / .com)</label>
+            <div class="input-wrapper">
+              <input type="email" 
+                     id="signup-email" 
+                     name="email" 
+                     class="form-input no-left-icon" 
+                     placeholder="elena.vance@university.edu" 
+                     autocomplete="email"
+                     required>
+            </div>
+            <span class="field-error" id="signup-email-error"></span>
+          </div>
+
+          <!-- Two-column Password & Confirm Password -->
+          <div class="form-grid-2">
+            <!-- Password Field -->
+            <div class="form-group">
+              <label for="signup-password" class="form-label">Password</label>
+              <div class="input-wrapper">
+                <span class="input-icon-left" aria-hidden="true">
+                  <span class="material-symbols-outlined">lock</span>
+                </span>
+                <input type="password" 
+                       id="signup-password" 
+                       name="password" 
+                       class="form-input password-input" 
+                       placeholder="••••••••••••••••••••••••" 
+                       autocomplete="new-password"
+                       required>
+                <button type="button" class="toggle-password-btn" aria-label="Toggle password visibility" data-target="signup-password">
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="form-group">
+              <div class="label-row">
+                <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+                <span class="match-badge hidden-badge" id="match-indicator">
+                  <span class="material-symbols-outlined match-icon">check</span>
+                  <span class="match-text">Match</span>
+                </span>
+              </div>
+              <div class="input-wrapper">
+                <span class="input-icon-left" aria-hidden="true">
+                  <span class="material-symbols-outlined">lock_reset</span>
+                </span>
+                <input type="password" 
+                       id="signup-confirm-password" 
+                       name="confirmPassword" 
+                       class="form-input password-input" 
+                       placeholder="••••••••••••••••••••••••" 
+                       autocomplete="new-password"
+                       required>
+                <button type="button" class="toggle-password-btn" aria-label="Toggle confirm password visibility" data-target="signup-confirm-password">
+                  <span class="material-symbols-outlined">visibility</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <span class="field-error" id="signup-password-error"></span>
+
+          <!-- Live Dynamic Password Complexity Panel -->
+          <div class="complexity-box">
+            <div class="complexity-header">
+              <span class="complexity-title">password complexity:</span>
+              <span class="complexity-status" id="complexity-rating">Empty (0/4 Criteria Met)</span>
+            </div>
+            
+            <!-- 4 Segmented Dynamic Progress Bars -->
+            <div class="complexity-bars" aria-hidden="true">
+              <div class="bar-segment" id="bar-1"></div>
+              <div class="bar-segment" id="bar-2"></div>
+              <div class="bar-segment" id="bar-3"></div>
+              <div class="bar-segment" id="bar-4"></div>
+            </div>
+
+            <!-- 4 Criteria Checklist with Live Indicators -->
+            <div class="complexity-criteria">
+              <span class="criterion" id="crit-length">
+                <span class="crit-icon">○</span> ≥ 8 Chars
+              </span>
+              <span class="criterion" id="crit-symbols">
+                <span class="crit-icon">○</span> Symbols
+              </span>
+              <span class="criterion" id="crit-numbers">
+                <span class="crit-icon">○</span> Numbers
+              </span>
+              <span class="criterion" id="crit-mixed">
+                <span class="crit-icon">○</span> Mixed Case
+              </span>
+            </div>
+          </div>
+
+          <!-- Agreement Checkbox -->
+          <div class="checkbox-row agreement-row">
+            <label class="custom-checkbox-label" for="signup-agree">
+              <input type="checkbox" id="signup-agree" required>
+              <span class="checkbox-box" aria-hidden="true">
+                <span class="material-symbols-outlined checkmark-icon">check</span>
+              </span>
+              <span class="checkbox-text">Agreement.</span>
+            </label>
+          </div>
+          <span class="field-error" id="signup-agree-error"></span>
+
+          <!-- Submit Button -->
+          <button type="submit" class="primary-btn" id="btn-submit-signup">
+            <span class="material-symbols-outlined btn-icon">how_to_reg</span>
+            <span class="btn-text">Create Account</span>
+          </button>
+        </form>
+
+        <!-- ============================================== -->
+        <!-- SIGN IN FORM (FOR IN-PAGE TAB SWITCHING)       -->
+        <!-- ============================================== -->
+        <form id="form-signin" class="auth-form" novalidate hidden>
+          <div class="section-legend">INDIVIDUAL CREDENTIALS</div>
+
+          <div class="form-group">
+            <label for="signin-email" class="form-label">Institutional / Primary Email</label>
+            <div class="input-wrapper">
+              <span class="input-icon-left text-icon" aria-hidden="true">@</span>
+              <input type="email" 
+                     id="signin-email" 
+                     name="email" 
+                     class="form-input" 
+                     placeholder="scholar@university.edu" 
+                     autocomplete="username"
+                     required>
+            </div>
+            <span class="field-error" id="signin-email-error"></span>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="signin-password" class="form-label">Secret Token / Passphrase</label>
+              <button type="button" class="forgot-link" id="btn-forgot-password">Forgot password?</button>
+            </div>
+            <div class="input-wrapper">
+              <span class="input-icon-left" aria-hidden="true">
+                <span class="material-symbols-outlined">lock</span>
+              </span>
+              <input type="password" 
+                     id="signin-password" 
+                     name="password" 
+                     class="form-input password-input" 
+                     placeholder="••••••••••••••••••••••••" 
+                     autocomplete="current-password"
+                     required>
+              <button type="button" class="toggle-password-btn" aria-label="Toggle password visibility" data-target="signin-password">
+                <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+            <span class="field-error" id="signin-password-error"></span>
+          </div>
+
+          <div class="checkbox-row">
+            <label class="custom-checkbox-label" for="signin-remember">
+              <input type="checkbox" id="signin-remember" checked>
+              <span class="checkbox-box" aria-hidden="true">
+                <span class="material-symbols-outlined checkmark-icon">check</span>
+              </span>
+              <span class="checkbox-text">Remember this workstation (30 days)</span>
+            </label>
+            
+            <div class="security-badge" title="Protected Workstation Environment">
+              <span class="material-symbols-outlined shield-icon">shield</span>
+            </div>
+          </div>
+
+          <button type="submit" class="primary-btn" id="btn-submit-signin">
+            <span class="material-symbols-outlined btn-icon">login</span>
+            <span class="btn-text">Sign In to IntegralAI</span>
+          </button>
+        </form>
+
+      </div>
+
+      <!-- Footer Sub-Card Navigation -->
+      <footer class="auth-footer">
+        <div class="footer-account-switch" id="footer-account-switch">
+          <span>Already have an profile?</span>
+          <button type="button" class="footer-link-btn" id="link-to-signin">
+            <span>Sign In to existing session</span>
+            <span class="material-symbols-outlined arrow-icon">arrow_forward</span>
+          </button>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- Bottom Centered Arrow Accent -->
+  <div class="bottom-accent-arrow" aria-hidden="true">
+    <span class="material-symbols-outlined">arrow_forward</span>
+  </div>
+
+  <!-- Bottom Right Status Indicator -->
+  <div class="status-indicator-dot" title="Computational Kernel Active" aria-hidden="true"></div>
+
+  <!-- ============================================== -->
+  <!-- FORGOT PASSWORD MODAL                          -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop" id="forgot-modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <div class="modal-icon-badge">
+          <span class="material-symbols-outlined">lock_reset</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="btn-close-modal" aria-label="Close modal">×</button>
+      </div>
+
+      <div class="modal-body">
+        <h2 id="modal-title">Reset Secret Token</h2>
+        <p class="modal-desc">Enter your verified institutional email address. A one-time cryptographic recovery passkey will be generated.</p>
+        
+        <form id="form-forgot-pass" novalidate>
+          <div class="form-group">
+            <label for="forgot-email" class="form-label">Institutional / Primary Email</label>
+            <div class="input-wrapper">
+              <span class="input-icon-left text-icon" aria-hidden="true">@</span>
+              <input type="email" 
+                     id="forgot-email" 
+                     class="form-input" 
+                     placeholder="scholar@university.edu" 
+                     required>
+            </div>
+            <span class="field-error" id="forgot-email-error"></span>
+          </div>
+
+          <button type="submit" class="primary-btn" id="btn-send-reset">
+            <span class="btn-text">Dispatch Recovery Token</span>
+          </button>
+        </form>
+
+        <div class="modal-success-state" id="forgot-success-state" hidden>
+          <div class="success-icon">
+            <span class="material-symbols-outlined">check_circle</span>
+          </div>
+          <h3>Recovery Token Dispatched</h3>
+          <p id="forgot-success-msg">A secure one-time passphrase reset token has been dispatched to your institutional address.</p>
+          <button type="button" class="secondary-btn" id="btn-done-forgot">Back to Sign In</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Alert Box -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

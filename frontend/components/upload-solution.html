@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="h-full bg-slate-50" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>IntegralAI | High-Precision Calculus Solver &amp; Step-by-Step Resolution</title>
+
+  <!-- Tailwind CSS CDN with Forms & Container Queries -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Google Fonts: Inter & JetBrains Mono / KaTeX Style Serif for Math -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=KaTeX_Main:ital,wght@0,400;0,700;1,400&family=STIX+Two+Math&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+            math: ['STIX Two Math', 'KaTeX_Main', 'serif']
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Shared Navbar Styles -->
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/upload.css">
+</head>
+
+<body
+  class="min-h-full flex flex-col font-sans text-slate-800 antialiased selection:bg-brand-500 selection:text-white bg-slate-50"
+  data-page="upload-solution">
+  <!-- SHARED NAVBAR PLACEHOLDER (Injected dynamically via js/navbar.js)     -->
+  <div id="navbar-placeholder" data-active-page="upload-solution"></div>
+
+  <!-- BEGIN: WorkspaceLayout -->
+  <main class="flex-1 max-w-[1780px] w-full mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- ================================================================= -->
+      <!-- LEFT COLUMN: Input & Exploration Workspace (5 Cols)               -->
+      <!-- ================================================================= -->
+      <section class="lg:col-span-5 space-y-6" data-purpose="solver-input-panel">
+
+        <!-- Input Card Container -->
+        <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden p-6 relative">
+
+          <!-- Card Header & Definite Mode Toggle -->
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h1 class="text-xl font-bold tracking-tight text-slate-900">Solve an Integration Problem</h1>
+              <p class="text-xs text-slate-600 mt-1">Enter your integration expression ..</p>
+            </div>
+
+            <!-- Mode Toggle Pill -->
+            <div class="flex items-center gap-1.5 shrink-0 ml-3">
+              <span id="mode-badge-text"
+                class="text-[11px] font-medium text-slate-500 hidden sm:inline-block">Indefinite</span>
+              <button type="button" id="btn-mode-toggle" role="switch" aria-checked="false"
+                title="Toggle Definite / Indefinite Integral Mode"
+                class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border border-slate-300 bg-slate-200 p-0.5 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-1">
+                <span class="sr-only">Toggle Definite Mode</span>
+                <span id="mode-toggle-dot" aria-hidden="true"
+                  class="pointer-events-none inline-block h-3.5 w-3.5 transform rounded-full bg-slate-400 shadow-sm ring-0 transition duration-200 ease-in-out translate-x-0"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- LaTeX/KaTeX Notation Workspace Input Field -->
+          <div class="mt-4">
+            <div class="flex justify-between items-center text-xs font-medium text-slate-600 mb-1.5">
+              <span>Mathematical Expression Input</span>
+            </div>
+
+            <!-- Big Interactive Integral Box -->
+            <div class="flex items-center gap-3">
+
+              <!-- Stacked Integration Limits & Symbol -->
+              <div class="relative flex items-center shrink-0 select-none pr-1">
+                <div id="limits-container"
+                  class="flex flex-col justify-between h-16 -mr-1 py-0.5 opacity-40 transition-opacity">
+                  <input id="limit-b" aria-label="Upper integration limit (b)"
+                    class="w-7 h-6 text-center font-mono text-xs rounded border border-slate-200 bg-white text-slate-800 placeholder-slate-400 p-0 focus:outline-none focus:ring-1 focus:ring-brand-600 focus:border-brand-600 shadow-xs"
+                    placeholder="b" type="text" value="">
+                  <input id="limit-a" aria-label="Lower integration limit (a)"
+                    class="w-7 h-6 text-center font-mono text-xs rounded border border-slate-200 bg-white text-slate-800 placeholder-slate-400 p-0 focus:outline-none focus:ring-1 focus:ring-brand-600 focus:border-brand-600 shadow-xs"
+                    placeholder="a" type="text" value="">
+                </div>
+                <span
+                  class="text-brand-600 font-serif text-6xl font-bold leading-none select-none tracking-tighter">∫</span>
+              </div>
+
+              <!-- Main Expression Input Container -->
+              <div
+                class="flex-1 group relative rounded-xl border-2 border-indigo-200 hover:border-brand-500 focus-within:border-brand-600 focus-within:ring-4 focus-within:ring-brand-100 bg-white transition-all p-4 shadow-inner">
+                <div class="flex items-center space-x-3">
+                  <div class="flex-1 flex items-baseline space-x-2">
+                    <input id="expression-input"
+                      class="w-full font-mono text-slate-800 bg-transparent border-none p-0 focus:ring-0 focus:outline-none placeholder-slate-300 font-medium text-lg"
+                      placeholder="e.g. sin(x) · cos(x) or x^2" type="text" value="" autocomplete="off"
+                      spellcheck="false">
+                  </div>
+                  <div class="flex items-center space-x-2 select-none shrink-0">
+                    <span class="math-font text-2xl font-italic font-semibold text-brand-600 italic">dx</span>
+                    <span
+                      class="text-xs font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">x
+                      ∈ ℝ</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Inline Error Message Banner (Hidden by default) -->
+            <div id="input-error"
+              class="hidden mt-3 p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
+              <i class="fa-solid fa-circle-exclamation text-rose-500"></i>
+              <span id="error-text">Please enter a valid mathematical expression.</span>
+            </div>
+          </div>
+
+          <!-- Quick Math Formula Insertion Chips -->
+          <div class="mt-4">
+            <div class="text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-2">QUICK INSERT SYMBOLS:
+            </div>
+            <div class="flex flex-wrap gap-1.5 font-mono text-xs" data-purpose="math-symbol-chips">
+              <button
+                class="symbol-chip px-2.5 py-1 rounded-md bg-slate-100 hover:bg-brand-50 hover:text-brand-700 hover:border-brand-200 border border-slate-200 text-slate-700 font-medium transition-all"
+                data-insert-symbol="^2" type="button">x²</button>
+              <button
+                class="symbol-chip px-2.5 py-1 rounded-md bg-slate-100 hover:bg-brand-50 hover:text-brand-700 hover:border-brand-200 border border-slate-200 text-slate-700 font-medium transition-all"
+                data-insert-symbol="√(x)" type="button">√x</button>
+              <button
+                class="symbol-chip px-2.5 py-1 rounded-md bg-slate-100 hover:bg-brand-50 hover:text-brand-700 hover:border-brand-200 border border-slate-200 text-slate-700 font-medium transition-all"
+                data-insert-symbol="e^x" type="button">eˣ</button>
+              <button
+                class="symbol-chip px-2.5 py-1 rounded-md bg-slate-100 hover:bg-brand-50 hover:text-brand-700 hover:border-brand-200 border border-slate-200 text-slate-700 font-medium transition-all"
+                data-insert-symbol="sin(x)" type="button">sin</button>
+              <button
+                class="symbol-chip px-2.5 py-1 rounded-md bg-slate-100 hover:bg-brand-50 hover:text-brand-700 hover:border-brand-200 border border-slate-200 text-slate-700 font-medium transition-all"
+                data-insert-symbol="cos(x)" type="button">cos</button>
+              <button
+                class="symbol-chip px-2.5 py-1 rounded-md bg-slate-100 hover:bg-brand-50 hover:text-brand-700 hover:border-brand-200 border border-slate-200 text-slate-700 font-medium transition-all"
+                data-insert-symbol="ln(x)" type="button">ln</button>
+              <button
+                class="symbol-chip px-2.5 py-1 rounded-md bg-slate-100 hover:bg-brand-50 hover:text-brand-700 hover:border-brand-200 border border-slate-200 text-slate-700 font-medium transition-all"
+                data-insert-symbol="(a/b)" type="button">a/b</button>
+              <!-- <button
+                class="symbol-chip px-2.5 py-1 rounded-md bg-slate-100 hover:bg-brand-50 hover:text-brand-700 hover:border-brand-200 border border-slate-200 text-slate-700 font-medium transition-all"
+                data-insert-symbol="lim_{x→0}" type="button">lim</button> -->
+              <!-- <button
+                class="symbol-chip px-2.5 py-1 rounded-md bg-slate-100 hover:bg-brand-50 hover:text-brand-700 hover:border-brand-200 border border-slate-200 text-slate-700 font-medium transition-all"
+                data-insert-symbol="definite-mode" type="button">[a→b] definite</button> -->
+            </div>
+          </div>
+
+          <!-- Bottom Action Buttons Toolbar -->
+          <div class="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <!-- <button id="btn-scan-notes"
+                class="inline-flex items-center space-x-1.5 px-3 py-2 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg transition-colors cursor-pointer"
+                type="button">
+                <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                  <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2"></path>
+                </svg>
+                <span>Scan handwritten notes</span>
+              </button> -->
+              <button id="btn-clear"
+                class="px-3 py-2 text-xs font-medium text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                type="button">
+                Clear
+              </button>
+            </div>
+
+            <!-- Primary Solve CTA -->
+            <button id="btn-solve"
+              class="inline-flex items-center space-x-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white font-semibold text-sm rounded-xl shadow-md shadow-brand-500/25 transition-all transform hover:-translate-y-0.5 cursor-pointer"
+              type="button">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                </path>
+              </svg>
+              <span>Solve Integration</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Reference Shortcut Box: Standard Table of Integrals -->
+        <div id="standard-table-card"
+          class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-2xl p-5 shadow-sm flex items-center justify-between cursor-pointer hover:ring-2 hover:ring-brand-500/50 transition-all select-none">
+          <div class="flex items-center space-x-3.5">
+            <div
+              class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-brand-300 border border-white/10">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold tracking-tight text-white flex items-center gap-1.5">
+                Standard Table of Integrals
+                <span
+                  class="text-[10px] px-1.5 py-0.5 rounded bg-brand-500/30 text-brand-200 border border-brand-400/20">48
+                  Rules</span>
+              </h3>
+              <p class="text-xs text-slate-300">48 Fundamental Antiderivative Rules &amp; Identities</p>
+            </div>
+          </div>
+          <button id="btn-download-direct"
+            class="p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
+            title="Download Reference Sheet (CSV)" type="button">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round"
+                stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- RIGHT COLUMN: High-Precision Step-by-Step Resolution Viewer (7 Cols)-->
+      <!-- ================================================================= -->
+      <section id="solution-proof-panel"
+        class="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 sm:p-7 relative min-h-[580px] flex flex-col justify-center"
+        data-purpose="solution-proof-panel">
+
+        <!-- INITIAL EMPTY PREVIEW STATE (Matching the Stitch Screenshot) -->
+        <div id="empty-state"
+          class="my-auto py-16 px-6 text-center flex flex-col items-center justify-center min-h-[500px] rounded-2xl border-2 border-dashed border-slate-200/80 bg-slate-50/50">
+          <div class="flex flex-wrap items-center justify-center gap-2 text-xs text-slate-600 font-mono">
+            <!-- Completely clean dashed placeholder matching the Stitch design -->
+          </div>
+        </div>
+
+        <!-- Solution BOX  -->
+        <div id="solution-state" class="hidden space-y-6">
+
+          <!-- Proof Header & Badges -->
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+            <div>
+              <h2 class="text-xl font-bold tracking-tight text-slate-900 mt-1">Step-by-Step Solution
+              </h2>
+            </div>
+
+            <!--  Solution given  by llm-->
+
+            
+          </div>
+
+          <!-- Problem Statement Banner -->
+          
+
+          
+
+          <!-- Highlighted Final Answer Box -->
+          <!-- <div
+            class="p-5 rounded-2xl bg-gradient-to-r from-emerald-50/80 to-teal-50/50 border border-emerald-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <span class="text-[11px] font-mono uppercase font-bold text-emerald-800 tracking-wider">Antiderivative
+                Result:</span>
+              <div id="sol-final-formula" class="text-2xl font-math font-bold text-slate-900 mt-1 tracking-wide">
+                ½ sin²(x) + C
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="btn-copy-solution" type="button"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-700 hover:text-emerald-800 bg-white hover:bg-emerald-50 rounded-xl border border-emerald-200 shadow-2xs transition-all cursor-pointer">
+                <i class="fa-regular fa-copy"></i>
+                <span>Copy Result</span>
+              </button>
+            </div>
+          </div> -->
+
+          <!-- Future Integration Disclaimer -->
+          <!-- <div
+            class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-[11px] text-slate-500 leading-normal flex items-start gap-2">
+            <i class="fa-solid fa-circle-info text-brand-500 mt-0.5"></i>
+            <div>
+              <strong class="font-semibold text-slate-700">Frontend Demonstration Notice:</strong> This solution
+              derivation utilizes predefined demo data to preview step formatting. Production backend connection is
+              architected for seamless integration with local/remote Qwen LLM and SymPy calculus solvers.
+            </div>
+          </div> -->
+
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+  <!-- END: WorkspaceLayout -->
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: Standard Table of Integrals (48 Identities & Search/Export)    -->
+  <!-- ===================================================================== -->
+  <div id="table-modal"
+    class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div
+      class="modal-animate bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
+
+      <!-- Modal Header -->
+      <div class="p-5 sm:p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-brand-600 text-white flex items-center justify-center text-sm shadow-xs">
+              <i class="fa-solid fa-book-bookmark"></i>
+            </span>
+            <h3 class="font-bold text-lg text-slate-900 tracking-tight">Standard Table of Integrals</h3>
+            <span id="formulas-count-badge"
+              class="text-xs font-mono font-medium px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200">
+              48 Identities
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">48 Fundamental Antiderivative Rules &amp; Identities with mathematical
+            expressions.</p>
+        </div>
+
+        <button id="btn-close-table-modal" type="button"
+          class="text-slate-400 hover:text-slate-700 p-2 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer"
+          title="Close modal (Esc)">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div
+        class="px-5 sm:px-6 py-3.5 border-b border-slate-100 bg-white flex flex-col sm:flex-row gap-3 items-center justify-between">
+
+        <!-- Search Input -->
+        <div class="relative w-full sm:w-80">
+          <input id="table-search-input" type="text"
+            placeholder="Search formula name or term (e.g., sin, power, exp)..."
+            class="w-full pl-9 pr-3.5 py-2 text-xs font-sans rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 placeholder-slate-400">
+          <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3 top-2.5 text-xs"></i>
+        </div>
+
+        <!-- Download Buttons -->
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <button id="btn-export-csv" type="button"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 hover:text-brand-700 bg-slate-100 hover:bg-brand-50 rounded-xl border border-slate-200 transition-colors cursor-pointer"
+            title="Export all 48 formulas as a CSV file">
+            <i class="fa-solid fa-file-csv text-brand-600"></i>
+            <span>Export CSV</span>
+          </button>
+          <button id="btn-export-txt" type="button"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 hover:text-brand-700 bg-slate-100 hover:bg-brand-50 rounded-xl border border-slate-200 transition-colors cursor-pointer"
+            title="Export reference sheet as a plain text file">
+            <i class="fa-solid fa-file-lines text-indigo-500"></i>
+            <span>Export TXT</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Category Filter Chips -->
+      <div
+        class="px-5 sm:px-6 py-2.5 bg-slate-50/70 border-b border-slate-100 flex items-center gap-1.5 overflow-x-auto custom-scrollbar text-xs">
+        <button type="button" data-cat="All"
+          class="table-category-filter px-3 py-1 rounded-lg font-medium text-xs bg-brand-600 text-white border border-brand-600 transition-colors shrink-0 cursor-pointer">All
+          (48)</button>
+        <button type="button" data-cat="Basic Algebraic"
+          class="table-category-filter px-3 py-1 rounded-lg font-medium text-xs bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition-colors shrink-0 cursor-pointer">Basic
+          Algebraic</button>
+        <button type="button" data-cat="Exponential & Log"
+          class="table-category-filter px-3 py-1 rounded-lg font-medium text-xs bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition-colors shrink-0 cursor-pointer">Exponential
+          &amp; Log</button>
+        <button type="button" data-cat="Trigonometric"
+          class="table-category-filter px-3 py-1 rounded-lg font-medium text-xs bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition-colors shrink-0 cursor-pointer">Trigonometric</button>
+        <button type="button" data-cat="Inverse Trig"
+          class="table-category-filter px-3 py-1 rounded-lg font-medium text-xs bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition-colors shrink-0 cursor-pointer">Inverse
+          Trig</button>
+        <button type="button" data-cat="Hyperbolic"
+          class="table-category-filter px-3 py-1 rounded-lg font-medium text-xs bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition-colors shrink-0 cursor-pointer">Hyperbolic</button>
+        <button type="button" data-cat="Advanced Techniques"
+          class="table-category-filter px-3 py-1 rounded-lg font-medium text-xs bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 transition-colors shrink-0 cursor-pointer">Advanced
+          Techniques</button>
+      </div>
+
+      <!-- Formula Grid Container -->
+      <div class="p-5 sm:p-6 overflow-y-auto max-h-[60vh] custom-scrollbar">
+        <div id="table-formula-list" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <!-- Dynamically populated via upload.js -->
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+        <span>Click any formula in list to copy or view.</span>
+        <button type="button"
+          onclick="document.getElementById('table-modal').classList.add('hidden'); document.body.classList.remove('overflow-hidden');"
+          class="px-4 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-medium transition-colors cursor-pointer">
+          Close Table
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: Handwritten OCR Simulation Notification                        -->
+  <!-- ===================================================================== -->
+  <div id="scan-modal"
+    class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="modal-animate bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div
+            class="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-brand-600">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">Handwritten OCR Scanner</h3>
+        </div>
+        <button id="btn-close-scan-modal" type="button" class="text-slate-400 hover:text-slate-700 p-1 cursor-pointer">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        The hardware camera / document scanner module is set to simulation mode in this frontend build per project
+        architecture.
+      </p>
+
+      <div class="p-3 rounded-xl bg-indigo-50/70 border border-indigo-100 text-xs text-slate-700 leading-relaxed">
+        <strong>Tip:</strong> You can directly input any mathematical equation using the big interactive integral field
+        or the quick insert chips: <code
+          class="font-mono text-brand-700 bg-white px-1 py-0.5 rounded border border-indigo-200">sin(x) · cos(x)</code>,
+        <code class="font-mono text-brand-700 bg-white px-1 py-0.5 rounded border border-indigo-200">x^2</code>, <code
+          class="font-mono text-brand-700 bg-white px-1 py-0.5 rounded border border-indigo-200">e^x</code>.
+      </div>
+
+      <div class="flex justify-end gap-2 pt-1">
+        <button id="btn-dismiss-scan-modal" type="button"
+          class="px-4 py-2 text-xs font-semibold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow-xs transition-colors cursor-pointer">
+          Understood
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Navbar Script -->
+  <script src="../js/navbar.js"></script>
+  <!-- Page Specific Script -->
+  <script src="../js/upload.js"></script>
+</body>
+
+</html>

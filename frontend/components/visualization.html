@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="h-full bg-slate-50" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>IntegralAI | Geometric Visualization &amp; Riemann Convergence</title>
+  
+  <!-- Tailwind CSS CDN with Forms & Container Queries -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts: Inter & JetBrains Mono / KaTeX Style Serif for Math -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=KaTeX_Main:ital,wght@0,400;0,700;1,400&family=STIX+Two+Math&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+            math: ['STIX Two Math', 'KaTeX_Main', 'serif']
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Shared Navbar Styles -->
+  <link rel="stylesheet" href="css/navbar.css">
+  <style>
+    .math-font {
+      font-family: 'STIX Two Math', 'KaTeX_Main', serif;
+    }
+    .curve-pulse {
+      filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.4));
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans text-slate-800 antialiased selection:bg-brand-500 selection:text-white bg-slate-50" data-page="visualization">
+
+  <!-- ===================================================================== -->
+  <!-- SHARED NAVBAR PLACEHOLDER (Injected dynamically via js/navbar.js)     -->
+  <!-- ===================================================================== -->
+  <div id="navbar-placeholder" data-active-page="visualization"></div>
+
+  <!-- BEGIN: MainContent Layout Container -->
+  <main class="flex-1 w-full max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex flex-col items-center justify-start space-y-6">
+    
+    <!-- Top Stage Header -->
+    <div class="w-full max-w-[1280px] flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-semibold uppercase tracking-wider mb-2">
+          <i class="fa-solid fa-chart-area"></i>
+          <span>Geometric Rendering Engine</span>
+        </div>
+        <h1 class="text-3xl font-bold tracking-tight text-slate-900">Integrand Curve &amp; Bounded Area</h1>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1">Real-time discrete Riemann partition mapping and asymptotic analytical convergence analysis.</p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="upload-solution.html" class="inline-flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow-xs transition-colors">
+          <i class="fa-solid fa-calculator"></i>
+          <span>Solve New Expression</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Visual Stage Card -->
+    <div class="w-full max-w-[1280px] bg-white rounded-3xl border border-slate-200 shadow-xl p-6 sm:p-10 space-y-8">
+      
+      <!-- Interactive Subheader & Controls Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-mono font-bold text-brand-600 uppercase tracking-wider bg-brand-50 px-2.5 py-1 rounded-lg border border-brand-100">
+            f(x) = e^(-x²)
+          </span>
+          <span class="text-xs font-mono text-slate-500">Domain: x ∈ [0, 4]</span>
+        </div>
+
+        <!-- Riemann Partition Selector -->
+        <div class="flex items-center gap-2 text-xs font-mono">
+          <span class="text-slate-500 font-sans text-xs">Partitions (n):</span>
+          <button type="button" class="btn-partition px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-700 border border-slate-200 font-semibold transition-colors" data-n="20">20</button>
+          <button type="button" class="btn-partition px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-700 border border-slate-200 font-semibold transition-colors" data-n="50">50</button>
+          <button type="button" class="btn-partition active px-2.5 py-1 rounded-lg bg-brand-600 text-white border border-brand-600 font-semibold transition-colors" data-n="100">100</button>
+          <button type="button" class="btn-partition px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-700 border border-slate-200 font-semibold transition-colors" data-n="500">500</button>
+        </div>
+      </div>
+
+      <!-- Graph Representation SVG Stage -->
+      <div class="relative w-full h-80 sm:h-96 bg-slate-950 rounded-2xl p-4 sm:p-6 overflow-hidden flex items-center justify-center shadow-inner">
+        
+        <!-- Ambient Grid Background -->
+        <div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(#6366f1 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+        <svg class="w-full h-full" viewBox="0 0 700 260" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="curveGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#6366f1" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#4338ca" stop-opacity="0.05"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Axes -->
+          <line x1="50" y1="30" x2="50" y2="220" stroke="#334155" stroke-width="2"></line>
+          <line x1="50" y1="220" x2="670" y2="220" stroke="#334155" stroke-width="2"></line>
+
+          <!-- Grid Dashed Reference Lines -->
+          <line x1="50" y1="70" x2="670" y2="70" stroke="#1e293b" stroke-dasharray="4,4" stroke-width="1"></line>
+          <line x1="50" y1="120" x2="670" y2="120" stroke="#1e293b" stroke-dasharray="4,4" stroke-width="1"></line>
+          <line x1="50" y1="170" x2="670" y2="170" stroke="#1e293b" stroke-dasharray="4,4" stroke-width="1"></line>
+          
+          <line x1="200" y1="30" x2="200" y2="220" stroke="#1e293b" stroke-dasharray="4,4" stroke-width="1"></line>
+          <line x1="350" y1="30" x2="350" y2="220" stroke="#1e293b" stroke-dasharray="4,4" stroke-width="1"></line>
+          <line x1="500" y1="30" x2="500" y2="220" stroke="#1e293b" stroke-dasharray="4,4" stroke-width="1"></line>
+
+          <!-- Shaded Area Under Curve -->
+          <path d="M50,45 Q150,55 240,120 T420,210 L620,220 L50,220 Z" fill="url(#curveGradient)"></path>
+
+          <!-- Gaussian Curve Line with Glow -->
+          <path class="curve-pulse" d="M50,45 Q150,55 240,120 T420,210 L620,220" fill="none" stroke="#818cf8" stroke-width="3.5" filter="url(#glow)"></path>
+
+          <!-- Inflection Point & Peak Markers -->
+          <circle cx="50" cy="45" r="5" fill="#38bdf8"></circle>
+          <circle cx="240" cy="120" r="4" fill="#a855f7"></circle>
+          <circle cx="420" cy="210" r="4" fill="#10b981"></circle>
+
+          <!-- Labels -->
+          <text x="60" y="48" fill="#e2e8f0" font-size="12" font-family="monospace" font-weight="bold">f(0) = 1.0 (Peak)</text>
+          <text x="250" y="115" fill="#c084fc" font-size="11" font-family="monospace">Inflection Point (x=1/√2)</text>
+          <text x="430" y="205" fill="#6ee7b7" font-size="11" font-family="monospace">Asymptotic Decay</text>
+          <text x="635" y="235" fill="#94a3b8" font-size="12" font-family="monospace">x-axis</text>
+          <text x="30" y="35" fill="#94a3b8" font-size="12" font-family="monospace">y</text>
+        </svg>
+
+        <!-- Floating Badge in Canvas -->
+        <div class="absolute bottom-4 right-4 bg-slate-900/80 backdrop-blur border border-slate-700/80 text-indigo-300 text-[11px] font-mono px-3 py-1.5 rounded-xl shadow-lg">
+          ∫₀^∞ e⁻ˣ² dx = √π / 2 ≈ 0.886227
+        </div>
+      </div>
+
+      <!-- Convergence Metric Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 font-mono">
+        
+        <div class="p-5 bg-slate-50/80 border border-slate-200/90 rounded-2xl hover:border-brand-300 transition-colors">
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
+            <span>Riemann Sum Approximation:</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-200/60 text-slate-700">n=100</span>
+          </div>
+          <p class="text-2xl text-slate-900 font-bold mt-1 tracking-tight" id="metric-riemann">0.886214</p>
+          <p class="text-[11px] text-slate-500 font-sans mt-2">Trapezoidal integration quadrature.</p>
+        </div>
+
+        <div class="p-5 bg-slate-50/80 border border-slate-200/90 rounded-2xl hover:border-brand-300 transition-colors">
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
+            <span>Analytical Closed Form:</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-brand-100 text-brand-800 font-semibold">Exact</span>
+          </div>
+          <p class="text-2xl text-brand-700 font-bold mt-1 tracking-tight">0.886227</p>
+          <p class="text-[11px] text-slate-500 font-sans mt-2">Exact value: √π / 2.</p>
+        </div>
+
+        <div class="p-5 bg-emerald-50/60 border border-emerald-200/80 rounded-2xl hover:border-emerald-300 transition-colors">
+          <div class="flex items-center justify-between text-xs text-emerald-800 mb-1">
+            <span>Convergence Residual:</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold">Verified</span>
+          </div>
+          <p class="text-2xl text-emerald-600 font-bold mt-1 tracking-tight">&lt; 0.0014%</p>
+          <p class="text-[11px] text-emerald-700 font-sans mt-2">Satisfies IEEE-754 precision bound.</p>
+        </div>
+
+      </div>
+
+      <!-- Descriptive Technical Explanation -->
+      <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 leading-relaxed flex items-start gap-3">
+        <i class="fa-solid fa-circle-nodes text-brand-600 text-sm mt-0.5 shrink-0"></i>
+        <div>
+          <strong class="text-slate-800">Numerical &amp; Symbolic Convergence:</strong> The Gaussian bell integrand $f(x) = \exp(-x^2)$ exhibits rapid exponential decay. Discretizing with higher partitions accelerates convergence toward the analytical limit $\frac{\sqrt{\pi}}{2}$. Switch to any partition chip above to inspect numerical behavior.
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+  <!-- END: MainContent -->
+
+  <!-- Shared Navbar Script -->
+  <script src="js/navbar.js"></script>
+
+  <script>
+    // Partition selector interactivity
+    document.querySelectorAll('.btn-partition').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.btn-partition').forEach(b => {
+          b.classList.remove('bg-brand-600', 'text-white', 'border-brand-600');
+          b.classList.add('bg-slate-100', 'text-slate-700', 'border-slate-200');
+        });
+        btn.classList.remove('bg-slate-100', 'text-slate-700', 'border-slate-200');
+        btn.classList.add('bg-brand-600', 'text-white', 'border-brand-600');
+
+        const n = parseInt(btn.getAttribute('data-n'), 10);
+        const metricEl = document.getElementById('metric-riemann');
+        if (metricEl) {
+          if (n === 20) metricEl.textContent = '0.885892';
+          else if (n === 50) metricEl.textContent = '0.886178';
+          else if (n === 100) metricEl.textContent = '0.886214';
+          else if (n === 500) metricEl.textContent = '0.886226';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
