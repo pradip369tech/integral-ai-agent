@@ -1,3 +1,4 @@
+
 /* IntegralAI — Upload & Solution Page Styling */
 
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=KaTeX_Main:ital,wght@0,400;0,700;1,400&family=STIX+Two+Math&display=swap');
@@ -8,7 +9,10 @@
   --brand-dark: #312e81;
 }
 
-/* Mathematical Typographic Styles */
+/* =========================================================
+   MATHEMATICAL TYPOGRAPHY
+   ========================================================= */
+
 .math-font {
   font-family: 'STIX Two Math', 'Cambria Math', 'KaTeX_Main', serif;
   font-feature-settings: 'calt' 1, 'kern' 1;
@@ -21,12 +25,18 @@
   font-style: italic;
 }
 
-/* Custom Smooth Transitions */
+/* =========================================================
+   SMOOTH TRANSITIONS
+   ========================================================= */
+
 .transition-smooth {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Interactive symbol chip hover */
+/* =========================================================
+   INTERACTIVE SYMBOL CHIPS
+   ========================================================= */
+
 .symbol-chip {
   transition: all 0.15s ease-in-out;
   user-select: none;
@@ -36,28 +46,45 @@
   transform: scale(0.95);
 }
 
-/* Integral Big Box Animation */
+/* =========================================================
+   INTEGRAL INPUT BOX
+   ========================================================= */
+
 .integral-box-wrapper:focus-within {
   border-color: #4f46e5;
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
 }
 
-/* Pulse indicator for live demo */
+/* =========================================================
+   LIVE DEMO PULSE ANIMATION
+   ========================================================= */
+
 @keyframes demoPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.1); }
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
 }
 
 .animate-pulse-dot {
   animation: demoPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Modal overlay animation */
+/* =========================================================
+   MODAL ANIMATION
+   ========================================================= */
+
 @keyframes modalFadeIn {
   from {
     opacity: 0;
     transform: scale(0.96) translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -68,13 +95,19 @@
   animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Formula card hover */
+/* =========================================================
+   FORMULA CARD HOVER
+   ========================================================= */
+
 .formula-row-item:hover {
   background-color: #f8faff;
   border-color: #c7d2fe;
 }
 
-/* Custom Scrollbar for Modal */
+/* =========================================================
+   MODAL SCROLLBAR
+   ========================================================= */
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -92,4 +125,146 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+/* =========================================================
+   SOLUTION PANEL LAYOUT
+   ========================================================= */
+
+/* Main outer solution box */
+#solution-proof-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start !important;
+  align-items: stretch;
+
+  height: 650px;
+  min-height: 580px;
+  max-height: 650px;
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Empty state before solving */
+#empty-state {
+  width: 100%;
+  min-height: 0 !important;
+  box-sizing: border-box;
+}
+
+/* Solution container */
+#solution-state {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
+
+  gap: 20px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding-right: 10px;
+  box-sizing: border-box;
+
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+/* Keep the entire heading row at the top */
+#solution-state > .flex.flex-wrap.items-center.justify-between {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+
+  flex-shrink: 0;
+
+  margin-top: 0;
+  padding-top: 8px;
+  padding-bottom: 16px;
+
+  background-color: #ffffff;
+}
+
+/* Heading styling */
+#solution-state h2 {
+  flex-shrink: 0;
+  margin-top: 0;
+}
+
+/* Display the LLM-generated solution */
+#llm-solution-output,
+#llm-answer,
+#sol-final-formula {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+
+  line-height: 1.8;
+  box-sizing: border-box;
+}
+
+/* Keep solution content inside the panel */
+#solution-state > * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Solution panel scrollbar */
+#solution-state::-webkit-scrollbar {
+  width: 7px;
+}
+
+#solution-state::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+#solution-state::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+#solution-state::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================================================
+   RESPONSIVE SOLUTION PANEL
+   ========================================================= */
+
+@media (max-width: 1023px) {
+  #solution-proof-panel {
+    height: 600px;
+    min-height: 400px;
+    max-height: 600px;
+  }
+}
+
+@media (max-width: 640px) {
+  #solution-proof-panel {
+    height: 550px;
+    min-height: 350px;
+    max-height: 550px;
+    padding: 20px;
+  }
+
+  #solution-state {
+    gap: 16px;
+    padding-right: 6px;
+  }
+
+  #solution-state h2 {
+    font-size: 1.125rem;
+    padding-bottom: 12px;
+  }
 }
