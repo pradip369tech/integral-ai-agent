@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integral AI - Simulation</title>
+    <link rel="stylesheet" href="simulate.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Playfair+Display:ital,wght@1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-card">
+        <!-- Top Navigation Bar -->
+        <header class="top-nav">
+            <div class="brand-pill">
+                <div class="brand-icon">
+                    <span class="integral-glyph">∫</span>
+                </div>
+                <span class="brand-text">Integral <span class="brand-highlight">AI</span></span>
+            </div>
+
+            <nav class="nav-tabs" aria-label="Main Navigation">
+                <a href="solve.html" class="tab-btn">
+                    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    <span>Solve</span>
+                </a>
+
+                <a href="solution.html" class="tab-btn">
+                    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span>Solution</span>
+                </a>
+
+                <a href="simulate.html" class="tab-btn active" aria-current="page">
+                    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                        <line x1="7" y1="10" x2="10" y2="7"></line>
+                        <line x1="10" y1="7" x2="14" y2="11"></line>
+                        <line x1="14" y1="11" x2="17" y2="8"></line>
+                    </svg>
+                    <span>Simulation</span>
+                </a>
+
+                <a href="#" class="tab-btn">
+                    <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Record</span>
+                </a>
+            </nav>
+        </header>
+
+        <!-- Main Simulation Graph Workspace -->
+        <main class="simulation-workspace">
+            <div class="graph-card">
+                <!-- Mathematical Function Plot (SVG) -->
+                <svg class="graph-canvas" viewBox="0 0 1024 640" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <!-- Coordinate Grid Pattern -->
+                        <pattern id="coordGrid" width="42.5" height="42.5" patternUnits="userSpaceOnUse">
+                            <path d="M 42.5 0 L 0 0 0 42.5" fill="none" stroke="#f1f4f9" stroke-width="1.2"/>
+                        </pattern>
+
+                        <!-- Area Under Curve Gradient Fill -->
+                        <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#4f46e5" stop-opacity="0.22"/>
+                            <stop offset="60%" stop-color="#6366f1" stop-opacity="0.10"/>
+                            <stop offset="100%" stop-color="#818cf8" stop-opacity="0.02"/>
+                        </linearGradient>
+
+                        <!-- Tooltip Soft Drop Shadow -->
+                        <filter id="tooltipShadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.2"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Coordinate Grid Background -->
+                    <rect x="30" y="30" width="964" height="580" fill="url(#coordGrid)"/>
+
+                    <!-- Integral Shaded Area Under Curve -->
+                    <path class="curve-area" fill="url(#areaGradient)" d="M 180,460 L 180,460 L 186,460 L 192,460 L 198,460 L 204,460 L 210,460 L 216,459.9 L 222,459.9 L 228,459.9 L 234,459.9 L 240,459.8 L 246,459.8 L 252,459.7 L 258,459.6 L 264,459.4 L 270,459.3 L 276,459.1 L 282,458.8 L 288,458.5 L 294,458 L 300,457.5 L 306,456.9 L 312,456.1 L 318,455.2 L 324,454.1 L 330,452.8 L 336,451.2 L 342,449.4 L 348,447.3 L 354,444.8 L 360,442 L 366,438.9 L 372,435.3 L 378,431.4 L 384,427 L 390,422.2 L 396,416.9 L 402,411.3 L 408,405.3 L 414,398.9 L 420,392.2 L 426,385.4 L 432,378.3 L 438,371.2 L 444,364 L 450,357 L 456,350.1 L 462,343.6 L 468,337.5 L 474,331.9 L 480,326.9 L 486,322.7 L 492,319.2 L 498,316.6 L 504,314.8 L 510,314.1 L 516,314.2 L 522,315.3 L 528,317.4 L 534,320.3 L 540,324 L 546,328.5 L 552,333.7 L 558,339.5 L 564,345.8 L 570,352.4 L 576,359.3 L 582,366.4 L 588,373.5 L 594,380.7 L 600,387.7 L 606,394.5 L 612,401.1 L 618,407.3 L 624,413.2 L 630,418.7 L 636,423.8 L 642,428.5 L 648,432.7 L 654,436.6 L 660,440 L 666,443 L 672,445.7 L 678,448 L 684,450 L 690,451.8 L 696,453.2 L 702,454.5 L 708,455.5 L 714,456.4 L 720,457.1 L 726,457.7 L 732,458.2 L 738,458.6 L 744,458.9 L 750,459.1 L 756,459.3 L 762,459.5 L 768,459.6 L 774,459.7 L 780,459.8 L 786,459.8 L 792,459.9 L 798,459.9 L 804,459.9 L 810,460 L 816,460 L 822,460 L 828,460 L 834,460 L 840,460 L 844,460 Z"/>
+
+                    <!-- Vertical Dashed Line from Origin (0,0) to Peak (0, 1.0) -->
+                    <line class="indicator-dashed" x1="512" y1="460" x2="512" y2="314" stroke="#6366f1" stroke-width="1.6" stroke-dasharray="3.5, 3.5"/>
+
+                    <!-- X-Axis Line and Arrowhead -->
+                    <line class="axis-line" x1="140" y1="460" x2="915" y2="460" stroke="#94a3b8" stroke-width="1.6"/>
+                    <polygon class="axis-arrow" points="915,456.5 924,460 915,463.5" fill="#94a3b8"/>
+                    <text class="axis-title" x="936" y="464" fill="#475569" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">x</text>
+
+                    <!-- Y-Axis Line and Arrowhead -->
+                    <line class="axis-line" x1="512" y1="585" x2="512" y2="215" stroke="#94a3b8" stroke-width="1.6"/>
+                    <polygon class="axis-arrow" points="508.5,215 512,206 515.5,215" fill="#94a3b8"/>
+                    <text class="axis-title y-label" x="512" y="196" text-anchor="middle" fill="#475569" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600">f(x)</text>
+
+                    <!-- X-Axis Numerical Tick Labels -->
+                    <g class="tick-labels" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="600" text-anchor="middle">
+                        <text x="257" y="476">-3.0</text>
+                        <text x="342" y="476">-2.0</text>
+                        <text x="427" y="476">-1.0</text>
+                        <text x="502" y="476">0</text>
+                        <text x="612" y="476">+1.0</text>
+                        <text x="697" y="476">+2.0</text>
+                        <text x="782" y="476">+3.0</text>
+                    </g>
+
+                    <!-- Y-Axis Numerical Tick Labels -->
+                    <g class="tick-labels y-ticks" fill="#94a3b8" font-family="'Plus Jakarta Sans', sans-serif" font-size="11.5" font-weight="600" text-anchor="end">
+                        <text x="498" y="318">1.0</text>
+                        <text x="498" y="388">0.5</text>
+                    </g>
+
+                    <!-- Main Gaussian Bell Curve Stroke -->
+                    <path class="curve-stroke" fill="none" stroke="#2535c8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M 180,460 L 186,460 L 192,460 L 198,460 L 204,460 L 210,460 L 216,459.9 L 222,459.9 L 228,459.9 L 234,459.9 L 240,459.8 L 246,459.8 L 252,459.7 L 258,459.6 L 264,459.4 L 270,459.3 L 276,459.1 L 282,458.8 L 288,458.5 L 294,458 L 300,457.5 L 306,456.9 L 312,456.1 L 318,455.2 L 324,454.1 L 330,452.8 L 336,451.2 L 342,449.4 L 348,447.3 L 354,444.8 L 360,442 L 366,438.9 L 372,435.3 L 378,431.4 L 384,427 L 390,422.2 L 396,416.9 L 402,411.3 L 408,405.3 L 414,398.9 L 420,392.2 L 426,385.4 L 432,378.3 L 438,371.2 L 444,364 L 450,357 L 456,350.1 L 462,343.6 L 468,337.5 L 474,331.9 L 480,326.9 L 486,322.7 L 492,319.2 L 498,316.6 L 504,314.8 L 510,314.1 L 516,314.2 L 522,315.3 L 528,317.4 L 534,320.3 L 540,324 L 546,328.5 L 552,333.7 L 558,339.5 L 564,345.8 L 570,352.4 L 576,359.3 L 582,366.4 L 588,373.5 L 594,380.7 L 600,387.7 L 606,394.5 L 612,401.1 L 618,407.3 L 624,413.2 L 630,418.7 L 636,423.8 L 642,428.5 L 648,432.7 L 654,436.6 L 660,440 L 666,443 L 672,445.7 L 678,448 L 684,450 L 690,451.8 L 696,453.2 L 702,454.5 L 708,455.5 L 714,456.4 L 720,457.1 L 726,457.7 L 732,458.2 L 738,458.6 L 744,458.9 L 750,459.1 L 756,459.3 L 762,459.5 L 768,459.6 L 774,459.7 L 780,459.8 L 786,459.8 L 792,459.9 L 798,459.9 L 804,459.9 L 810,460 L 816,460 L 822,460 L 828,460 L 834,460 L 840,460"/>
+
+                    <!-- Secondary Inflection Point Dot -->
+                    <circle class="curve-point" cx="582" cy="412" r="4.2" fill="#5046e5"/>
+
+                    <!-- Peak Point Dot -->
+                    <circle class="curve-point peak-dot" cx="512" cy="314" r="4.8" fill="#2535c8"/>
+
+                    <!-- Peak Information Callout Tooltip -->
+                    <g class="tooltip-container" transform="translate(522, 294)" filter="url(#tooltipShadow)">
+                        <!-- Dark Rounded Tooltip Box -->
+                        <rect x="0" y="0" width="138" height="38" rx="8" fill="#181d33"/>
+                        <!-- Line 1: Peak info -->
+                        <text x="10" y="15.5" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="600" letter-spacing="-0.01em">Peak (μ=0, σ=1)</text>
+                        <!-- Line 2: Area / Integral info -->
+                        <text x="10" y="29.5" fill="#c7d2fe" font-family="'Fira Code', 'Plus Jakarta Sans', monospace" font-size="9.5" font-weight="500">Area ∫ = √π ≈ 1.772</text>
+                    </g>
+                </svg>
+
+                <!-- Floating Bottom-Right Zoom & View Controls -->
+                <div class="graph-controls" role="toolbar" aria-label="Graph Zoom and Reset">
+                    <button type="button" class="ctrl-btn" aria-label="Zoom in">+</button>
+                    <span class="ctrl-divider"></span>
+                    <button type="button" class="ctrl-btn" aria-label="Zoom out">−</button>
+                    <span class="ctrl-divider"></span>
+                    <button type="button" class="ctrl-btn" aria-label="Reset view">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
+

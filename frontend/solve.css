@@ -1,0 +1,422 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #ffffff;
+    color: #1e293b;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Outer Application Canvas / Card taking 100% of Chrome window */
+.app-card {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    min-height: 100vh;
+    background-color: #ffffff;
+    /* Dot Matrix Background with Subtle Ambient Glows */
+    background-image: 
+        radial-gradient(circle at 0% 0%, rgba(224, 238, 255, 0.5) 0%, transparent 45%),
+        radial-gradient(circle at 100% 100%, rgba(230, 242, 255, 0.45) 0%, transparent 40%),
+        radial-gradient(#dce5f0 1.4px, transparent 1.4px);
+    background-size: 100% 100%, 100% 100%, 26px 26px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 24px 40px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Background Ambient Watermark */
+.watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-style: italic;
+    font-size: min(24vw, 270px);
+    font-weight: 400;
+    color: #334155;
+    opacity: 0.035;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    z-index: 1;
+    letter-spacing: -0.02em;
+}
+
+/* Top Navigation Bar */
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+/* Brand Pill */
+.brand-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    border: 1px solid #e7edf5;
+    border-radius: 12px;
+    padding: 7px 16px 7px 8px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+    user-select: none;
+}
+
+.brand-icon {
+    width: 32px;
+    height: 32px;
+    background: #4f46e5;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.integral-glyph {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: #ffffff;
+    font-size: 21px;
+    line-height: 1;
+    transform: translateY(-1px);
+}
+
+.brand-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+}
+
+.brand-highlight {
+    color: #4f46e5;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    text-decoration: none;
+    background: #ffffff;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.tab-btn:hover {
+    background: #f8fafc;
+    color: #334155;
+    border-color: #cbd5e1;
+}
+
+.tab-btn.active {
+    background: #4f46e5;
+    color: #ffffff;
+    border-color: #4f46e5;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.28);
+}
+
+.tab-btn.active:hover {
+    background: #4338ca;
+    border-color: #4338ca;
+}
+
+.tab-icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+/* Main Solver Center Section - Vertically and Horizontally Centered */
+.solver-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.main-title {
+    font-size: clamp(30px, 3.4vw, 44px);
+    font-weight: 800;
+    color: #0b132b;
+    letter-spacing: -0.025em;
+    margin-bottom: clamp(20px, 2.8vh, 34px);
+    text-align: center;
+}
+
+/* Expression Input Card */
+.input-card {
+    width: 100%;
+    max-width: 860px;
+    background: #ffffff;
+    border: 1.5px solid #e2eaf4;
+    border-radius: 18px;
+    padding: 10px 12px 10px 26px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+    transition: all 0.2s ease;
+}
+
+.input-card:focus-within {
+    border-color: #a5b4fc;
+    box-shadow: 0 6px 26px rgba(79, 70, 229, 0.08);
+}
+
+.math-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 19px;
+    font-weight: 500;
+    color: #1e293b;
+    padding: 10px 0;
+}
+
+.compute-btn {
+    background: #4f46e5;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    height: 48px;
+    padding: 0 24px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.24);
+}
+
+.compute-btn:hover {
+    background: #4338ca;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.32);
+}
+
+.compute-btn:active {
+    transform: translateY(0);
+}
+
+.btn-arrow {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.compute-btn:hover .btn-arrow {
+    transform: translateX(2px);
+}
+
+/* Quick Insert Symbols Toolbar */
+.symbols-wrapper {
+    width: 100%;
+    max-width: 860px;
+    margin-top: clamp(16px, 2.2vh, 26px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.symbols-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #5b738e;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.symbols-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.sym-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 42px;
+    padding: 0 14px;
+    background-color: #f1f5fa;
+    color: #153c61;
+    border: 1.5px solid #d5e1ee;
+    border-radius: 10px;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease-in-out;
+}
+
+.sym-badge sup {
+    font-size: 10px;
+    font-weight: 600;
+    position: relative;
+    top: -0.45em;
+    left: 1px;
+    line-height: 0;
+}
+
+.badge-icon {
+    width: 13px;
+    height: 13px;
+    color: #69839f;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.wave-icon {
+    font-size: 14px;
+    line-height: 1;
+    color: #69839f;
+    font-weight: 600;
+}
+
+.superscript-icon {
+    font-size: 12px;
+    color: #69839f;
+    font-style: italic;
+}
+
+/* Hover & Active States for Badges */
+.sym-badge:hover {
+    background-color: #e4edf7;
+    border-color: #b5cde3;
+    color: #0b2742;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(21, 60, 97, 0.08);
+}
+
+.sym-badge:active {
+    background-color: #d6e4f2;
+    border-color: #9ebddf;
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.sym-badge:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.22);
+    border-color: #4f46e5;
+}
+
+/* Clear Button (Right side of lim button) */
+.sym-badge.clear-btn {
+    background-color: #fff1f2;
+    color: #e11d48;
+    border-color: #fecdd3;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 0 15px;
+}
+
+.sym-badge.clear-btn .badge-icon {
+    color: #e11d48;
+    width: 14px;
+    height: 14px;
+}
+
+.sym-badge.clear-btn:hover {
+    background-color: #ffe4e6;
+    border-color: #fda4af;
+    color: #be123c;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(225, 29, 72, 0.15);
+}
+
+.sym-badge.clear-btn:active {
+    background-color: #fecdd3;
+    border-color: #fb7185;
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.sym-badge.clear-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.25);
+    border-color: #e11d48;
+}
+
+/* Responsive Styles */
+@media (max-width: 900px) {
+    .app-card {
+        padding: 20px;
+    }
+
+    .main-title {
+        font-size: 28px;
+    }
+
+    .top-nav {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .nav-tabs {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+    }
+}
