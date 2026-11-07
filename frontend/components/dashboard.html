@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html class="h-full bg-[#faf8ff]" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>IntegralAI — Calculus Mastery Dashboard</title>
+  
+  <!-- Tailwind CSS CDN with plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts: Plus Jakarta Sans, EB Garamond, Inter, JetBrains Mono -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons for UI & Math elements -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-tertiary": "#ffffff",
+            "outline": "#777587",
+            "outline-variant": "#c7c4d8",
+            "on-error-container": "#93000a",
+            "surface-container": "#eaedff",
+            "on-background": "#131b2e",
+            "tertiary-container": "#006a7c",
+            "primary-fixed-dim": "#c3c0ff",
+            "secondary": "#712ae2",
+            "on-primary-fixed-variant": "#3323cc",
+            "on-primary-fixed": "#0f0069",
+            "on-secondary-fixed": "#25005a",
+            "on-surface": "#131b2e",
+            "surface-container-low": "#f2f3ff",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "surface-dim": "#d2d9f4",
+            "error": "#ba1a1a",
+            "on-secondary-container": "#fffbff",
+            "surface-container-high": "#e2e7ff",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "inverse-on-surface": "#eef0ff",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#c3c0ff",
+            "surface-variant": "#dae2fd",
+            "on-tertiary-container": "#93e8ff",
+            "primary-fixed": "#e2dfff",
+            "surface": "#faf8ff",
+            "on-tertiary-fixed": "#001f26",
+            "primary-container": "#4f46e5",
+            "on-primary-container": "#dad7ff",
+            "secondary-fixed-dim": "#d2bbff",
+            "background": "#faf8ff",
+            "tertiary": "#00505f",
+            "tertiary-fixed": "#acedff",
+            "inverse-surface": "#283044",
+            "secondary-fixed": "#eaddff",
+            "secondary-container": "#8a4cfc",
+            "surface-tint": "#4d44e3",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "on-surface-variant": "#464555",
+            "surface-bright": "#faf8ff",
+            "on-secondary-fixed-variant": "#5a00c6",
+            "surface-container-highest": "#dae2fd",
+            "primary": "#3525cd",
+            "surface-container-lowest": "#ffffff"
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            heading: ['Plus Jakarta Sans', 'sans-serif'],
+            math: ['EB Garamond', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="min-h-full flex flex-col font-sans bg-[#faf8ff] text-slate-800 antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- Shared Navbar Component Placeholder -->
+  <div id="navbar-placeholder" data-active-page="dashboard"></div>
+
+  <!-- BEGIN: MainContent Layout Container -->
+  <main class="flex-1 w-full max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 flex flex-col items-center justify-center">
+
+    <!-- ================================================================= -->
+    <!-- 1. DASHBOARD HERO SECTION (DEFAULT ACTIVE)                        -->
+    <!-- ================================================================= -->
+    <div id="section-dashboard" class="content-section w-full max-w-[1440px] min-h-[78vh] relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-indigo-700 to-indigo-600 p-8 sm:p-12 lg:p-14 text-white shadow-xl shadow-primary/20 flex flex-col justify-between">
+      
+      <!-- Animated SVG Waves Background (18s and 24s linear) -->
+      <div class="absolute inset-0 pointer-events-none opacity-20 overflow-hidden" aria-hidden="true">
+        <!-- Wave 1: 18s linear infinite -->
+        <svg class="absolute w-[200%] h-full top-0 left-0" preserveAspectRatio="none" style="animation: sineWave 18s linear infinite;" viewBox="0 0 1200 240">
+          <path d="M0,120 C150,190 350,50 500,120 C650,190 850,50 1000,120 C1150,190 1350,50 1500,120 C1650,190 1850,50 2000,120 L2000,240 L0,240 Z" fill="white"></path>
+        </svg>
+        <!-- Wave 2: 24s linear reverse infinite -->
+        <svg class="absolute w-[200%] h-full top-0 left-0" preserveAspectRatio="none" style="animation: sineWave 24s linear reverse infinite;" viewBox="0 0 1200 240">
+          <path d="M0,80 C180,10 380,160 550,90 C720,20 920,150 1100,80 C1280,10 1480,160 1650,90 L2000,240 L0,240 Z" fill="rgba(255,255,255,0.4)"></path>
+        </svg>
+      </div>
+
+      <!-- Floating Decorative Mathematical Formulas -->
+      <div class="absolute right-16 top-10 text-5xl math-glyph text-white/30 animate-float-slow select-none pointer-events-none hidden lg:block" aria-hidden="true">
+        ∫<span class="text-3xl">₀^∞</span> e<sup class="text-base">-x²</sup> dx = √π / 2
+      </div>
+      
+      <div class="absolute right-72 bottom-12 text-3xl math-glyph text-white/20 animate-float-delayed select-none pointer-events-none hidden md:block" aria-hidden="true">
+        lim<span class="text-sm">n→∞</span> ∑ f(xᵢ*)Δx
+      </div>
+
+      <!-- Main Stage Content -->
+      <div class="relative z-10 flex-1 flex flex-col justify-between gap-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center flex-1">
+          
+          <!-- Left Hero Column -->
+          <div class="lg:col-span-8 flex flex-col justify-center space-y-6">
+            
+            <div class="flex flex-wrap items-center gap-2.5 text-xs font-heading font-semibold uppercase tracking-wider text-indigo-200">
+              <span class="px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 flex items-center gap-2 shadow-xs">
+                <i class="fa-solid fa-graduation-cap text-amber-300"></i>MASTER THE INNOVATION
+              </span>
+              <span class="text-white/40">•</span>
+            </div>
+            
+            <div class="space-y-3">
+              <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-white tracking-tight leading-tight">
+                Welcome back, <span class="underline decoration-amber-400/80 decoration-wavy decoration-2">Elena</span>
+              </h1>
+              <p class="text-base sm:text-lg lg:text-xl text-indigo-100 font-sans leading-relaxed max-w-2xl">
+                Calculus II (MATH-202) Honors Track. You are currently in the <strong class="text-white font-semibold">top 3%</strong> of your cohort in technique convergence accuracy and rigorous step justification.
+              </p>
+            </div>
+
+            <!-- Quick Action Shortcuts -->
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <button type="button" id="btn-quick-solve" class="px-5 py-2.5 rounded-xl bg-white text-primary font-heading font-bold text-sm shadow-lg shadow-black/10 hover:bg-indigo-50 transition-all flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-indigo-600"></i> Launch Symbolic Solver
+              </button>
+              <a href="upload-solution.html" id="btn-goto-upload" class="px-5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white font-heading font-semibold text-sm backdrop-blur-md transition-all flex items-center gap-2">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Upload Expression
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Right Profile Card -->
+          <div class="lg:col-span-4 flex justify-center lg:justify-end">
+            <div class="w-full max-w-sm flex flex-col items-center justify-center p-7 rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 shadow-xl text-center shrink-0">
+              
+              <div class="relative mb-4">
+                <img alt="Elena Vance" class="w-28 h-28 rounded-full object-cover ring-4 ring-white/30 shadow-md" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256">
+                <span class="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-emerald-500 ring-2 ring-white"></span>
+              </div>
+              
+              <div class="font-heading font-extrabold text-white text-xl leading-tight">Elena Vance</div>
+              <div class="font-mono text-sm text-indigo-200 mt-1">MATH-202H • Student Scholar</div>
+              
+              <div class="mt-6 w-full pt-5 border-t border-white/15 grid grid-cols-2 gap-3 text-left">
+                <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                  <div class="text-[10px] uppercase font-mono text-indigo-200">Integrals Solved</div>
+                  <div class="text-lg font-heading font-bold text-white mt-0.5">142</div>
+                </div>
+                <div class="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                  <div class="text-[10px] uppercase font-mono text-indigo-200">Accuracy</div>
+                  <div class="text-lg font-heading font-bold text-emerald-300 mt-0.5">99.4%</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Footer Row inside Card -->
+        <div class="pt-4 border-t border-white/15 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-2 text-xs font-mono text-indigo-200">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Calculus qwen3.8-27b</span>
+            <span class="text-white/40 text-[10px]">• Demo Status: Active</span>
+          </div>
+          
+          <button type="button" id="btn-lightning-trigger" class="flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-black/20 hover:bg-black/35 backdrop-blur-md border border-white/10 text-xs font-mono text-indigo-100 transition-all cursor-pointer shadow-sm" title="Open Instant Problem Solver">
+            <i class="fa-solid fa-bolt-lightning text-amber-300"></i>
+            <span>Quick Solve</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- 2. UPLOAD SECTION                                                 -->
+    <!-- ================================================================= -->
+    <div id="section-upload" class="content-section hidden w-full max-w-[1200px] bg-white rounded-3xl border border-slate-200 shadow-xl p-8 sm:p-12">
+      <div class="max-w-2xl mx-auto text-center space-y-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-primary text-xs font-semibold">
+          <i class="fa-solid fa-file-arrow-up"></i>
+          <span>EXPRESSION &amp; DOCUMENT INGESTION</span>
+        </div>
+        <h2 class="text-3xl font-heading font-bold text-slate-900">Upload Integral Expression</h2>
+        <p class="text-slate-600 text-sm">Enter raw LaTeX, plain text mathematical expression, or upload handwritten notes (PNG, JPG, PDF).</p>
+
+        <!-- Integral Text Input Box -->
+        <div class="space-y-2 text-left">
+          <label for="input-integral-text" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">LaTeX / Symbolic Expression</label>
+          <div class="relative">
+            <input type="text" id="input-integral-text" placeholder="\int_{0}^{\pi} x \sin(x) \, dx" class="w-full px-4 py-3 rounded-xl border border-slate-300 font-mono text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none">
+          </div>
+        </div>
+
+        <!-- File Upload Drag & Drop Area -->
+        <div id="dropzone" class="border-2 border-dashed border-slate-300 hover:border-primary rounded-2xl p-8 text-center transition-colors cursor-pointer bg-slate-50/50 hover:bg-indigo-50/30">
+          <input type="file" id="file-upload-input" class="hidden" accept=".png,.jpg,.jpeg,.pdf">
+          <i class="fa-solid fa-cloud-arrow-up text-4xl text-indigo-400 mb-3"></i>
+          <p class="text-sm font-semibold text-slate-700">Drag &amp; drop handwritten problem image or PDF</p>
+          <p class="text-xs text-slate-500 mt-1">Supported formats: JPG, PNG, PDF (up to 15MB)</p>
+          <div id="selected-file-banner" class="hidden mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg text-xs font-mono">
+            <i class="fa-solid fa-file-check"></i> <span id="selected-filename">sample_integral.png</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center gap-4 pt-2">
+          <button type="button" id="btn-submit-upload" class="px-6 py-2.5 rounded-xl bg-primary text-white font-heading font-semibold text-sm hover:bg-indigo-800 transition-colors shadow-md shadow-primary/20">
+            Parse &amp; Generate Solution
+          </button>
+          <button type="button" id="btn-reset-upload" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-heading font-semibold text-sm transition-colors">
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- 3. SOLUTION SECTION                                               -->
+    <!-- ================================================================= -->
+    <div id="section-solution" class="content-section hidden w-full max-w-[1200px] bg-white rounded-3xl border border-slate-200 shadow-xl p-8 sm:p-12 space-y-6">
+      <div class="flex flex-wrap items-center justify-between border-b border-slate-100 pb-4">
+        <div>
+          <span class="text-xs font-mono uppercase text-primary font-bold">Solved Derivation Step-by-Step</span>
+          <h2 class="text-2xl font-heading font-bold text-slate-900 mt-0.5">Gaussian Definite Integral</h2>
+        </div>
+        <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-xs font-mono font-bold border border-emerald-200">
+          Convergence Verified
+        </span>
+      </div>
+
+      <!-- Problem Statement -->
+      <div class="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 flex items-center justify-between">
+        <div>
+          <span class="text-xs text-slate-500 font-medium">Input Expression:</span>
+          <div class="text-xl font-math text-slate-900 mt-1 italic">I = ∫₀^∞ e⁻ˣ² dx</div>
+        </div>
+        <div class="text-right">
+          <span class="text-xs text-slate-500 font-medium">Analytical Result:</span>
+          <div class="text-xl font-math font-bold text-primary mt-1">√π / 2 ≈ 0.886227</div>
+        </div>
+      </div>
+
+      <!-- Steps Accordion -->
+      <div class="space-y-3 font-sans">
+        <div class="border border-slate-200 rounded-xl p-4">
+          <h3 class="text-sm font-bold text-slate-800">Step 1: Polar Coordinate Transformation</h3>
+          <p class="text-xs text-slate-600 mt-1">Consider the square $I^2 = (\int_0^\infty e^{-x^2} dx)(\int_0^\infty e^{-y^2} dy) = \int_0^\infty \int_0^\infty e^{-(x^2+y^2)} dx dy$.</p>
+        </div>
+        <div class="border border-slate-200 rounded-xl p-4">
+          <h3 class="text-sm font-bold text-slate-800">Step 2: Conversion to First Quadrant Polar Coordinates</h3>
+          <p class="text-xs text-slate-600 mt-1">Substitute $x^2 + y^2 = r^2$ with Jacobian $dx dy = r dr d\theta$ over $0 \le r < \infty$ and $0 \le \theta \le \pi/2$.</p>
+        </div>
+        <div class="border border-slate-200 rounded-xl p-4">
+          <h3 class="text-sm font-bold text-slate-800">Step 3: Direct Integration &amp; Evaluation</h3>
+          <p class="text-xs text-slate-600 mt-1">$I^2 = (\pi/2) \int_0^\infty e^{-r^2} r dr = (\pi/2) [-e^{-r^2}/2]_0^\infty = \pi/4 \implies I = \frac{\sqrt{\pi}}{2}$.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- 4. VISUALIZATION SECTION                                          -->
+    <!-- ================================================================= -->
+    <div id="section-visualization" class="content-section hidden w-full max-w-[1200px] bg-white rounded-3xl border border-slate-200 shadow-xl p-8 sm:p-12 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div>
+          <span class="text-xs font-mono uppercase text-primary font-bold">Geometric Rendering</span>
+          <h2 class="text-2xl font-heading font-bold text-slate-900 mt-0.5">Integrand Curve &amp; Bounded Area</h2>
+        </div>
+        <span class="text-xs font-mono text-slate-500">Domain: [0, 4]</span>
+      </div>
+
+      <!-- Graph Representation SVG -->
+      <div class="relative w-full h-72 bg-slate-950 rounded-2xl p-4 overflow-hidden flex items-center justify-center">
+        <svg class="w-full h-full" viewBox="0 0 600 220">
+          <!-- Grid lines -->
+          <line x1="40" y1="20" x2="40" y2="180" stroke="#334155" stroke-width="1.5"></line>
+          <line x1="40" y1="180" x2="560" y2="180" stroke="#334155" stroke-width="1.5"></line>
+          <!-- Shaded Area Under Curve -->
+          <path d="M40,30 Q120,35 180,80 T320,175 L500,180 L40,180 Z" fill="rgba(79, 70, 229, 0.35)"></path>
+          <!-- Curve Line -->
+          <path d="M40,30 Q120,35 180,80 T320,175 L500,180" fill="none" stroke="#818cf8" stroke-width="3"></path>
+          <!-- Coordinate Markers -->
+          <circle cx="40" cy="30" r="4" fill="#38bdf8"></circle>
+          <text x="50" y="32" fill="#94a3b8" font-size="11" font-family="monospace">f(0) = 1.0</text>
+          <text x="520" y="195" fill="#94a3b8" font-size="11" font-family="monospace">x-axis</text>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+          <span class="text-slate-500">Riemann Sum (n=100):</span>
+          <p class="text-slate-900 font-bold mt-0.5">0.886214</p>
+        </div>
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+          <span class="text-slate-500">Analytical Limit:</span>
+          <p class="text-slate-900 font-bold mt-0.5">0.886227</p>
+        </div>
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+          <span class="text-slate-500">Convergence Error:</span>
+          <p class="text-emerald-600 font-bold mt-0.5">&lt; 0.0014%</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- 5. HISTORY SECTION                                                -->
+    <!-- ================================================================= -->
+    <div id="section-history" class="content-section hidden w-full max-w-[1200px] bg-white rounded-3xl border border-slate-200 shadow-xl p-8 sm:p-12 space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+        <div>
+          <span class="text-xs font-mono uppercase text-primary font-bold">Calculus Workspace Record</span>
+          <h2 class="text-2xl font-heading font-bold text-slate-900 mt-0.5">Solved Problem Archive</h2>
+        </div>
+        <!-- Search bar -->
+        <div class="relative">
+          <input type="text" id="history-search-input" placeholder="Search archive..." class="pl-9 pr-4 py-2 text-xs font-mono rounded-xl border border-slate-200 focus:outline-none focus:border-primary">
+          <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-3 top-3 text-xs"></i>
+        </div>
+      </div>
+
+      <!-- History List -->
+      <div class="space-y-3" id="history-items-container">
+        <div class="history-card p-4 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all flex items-center justify-between" data-title="gaussian integral">
+          <div>
+            <div class="font-math text-base font-bold text-slate-900">∫₀^∞ e⁻ˣ² dx</div>
+            <p class="text-xs text-slate-500 font-mono mt-0.5">Solved via Polar Transform • Today</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 text-xs font-mono">√π / 2</span>
+            <button type="button" class="btn-delete-history text-slate-400 hover:text-rose-500 p-1.5 transition-colors" title="Delete record">
+              <i class="fa-solid fa-trash-can text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="history-card p-4 rounded-2xl border border-slate-200 hover:border-indigo-300 transition-all flex items-center justify-between" data-title="sine integral integration by parts">
+          <div>
+            <div class="font-math text-base font-bold text-slate-900">∫ x · sin(x) dx</div>
+            <p class="text-xs text-slate-500 font-mono mt-0.5">Integration by Parts • Yesterday</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700 text-xs font-mono">sin(x) - x·cos(x) + C</span>
+            <button type="button" class="btn-delete-history text-slate-400 hover:text-rose-500 p-1.5 transition-colors" title="Delete record">
+              <i class="fa-solid fa-trash-can text-sm"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+  <!-- END: MainContent -->
+
+  <!-- QUICK SOLVER MODAL (Triggered via Lightning button) -->
+  <div id="quick-solver-modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-bolt-lightning text-amber-500"></i>
+          <h3 class="font-heading font-bold text-slate-900 text-base">Instant Symbolic Solver</h3>
+        </div>
+        <button type="button" id="btn-close-modal" class="text-slate-400 hover:text-slate-700 p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <p class="text-xs text-slate-500 leading-relaxed">Enter an indefinite or definite integral to compute step-by-step symbolic derivation.</p>
+      <input type="text" id="quick-integral-input" placeholder="\int x^2 \ln(x) dx" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 font-mono text-sm focus:outline-none focus:border-primary">
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" id="btn-cancel-modal" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+        <button type="button" id="btn-solve-now" class="px-5 py-2 text-xs font-bold text-white bg-primary hover:bg-indigo-800 rounded-xl shadow-md">Compute</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/navbar.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
